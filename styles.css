@@ -1,0 +1,126 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Basic Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #000; /* Dark background for sleek design */
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* Container Styles */
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    background-color: #111; /* Darker background for container */
+    animation: fadeIn 1s ease-in-out; /* Animation */
+}
+
+/* Profile Picture Styling */
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    margin: 20px 0;
+    transition: transform 0.3s ease; /* Hover effect */
+}
+
+.profile-pic:hover {
+    transform: scale(1.1); /* Zoom effect on hover */
+}
+
+.profile h1 {
+    font-size: 2em;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.profile p {
+    font-size: 1.1em;
+    color: #ddd; /* Softer text color for subtitles */
+    margin-top: 5px;
+}
+
+/* Links Styling */
+.links .link {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background: #333;
+    color: #fff;
+    padding: 14px;
+    margin: 12px 0;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.links .link:hover {
+    background: #555;
+    transform: translateY(-4px); /* Lifting effect on hover */
+}
+
+/* Icon Styling */
+.icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 12px;
+    border-radius: 6px; /* Rounded icons */
+}
+
+/* Specific Platform Colors */
+.link.snapchat { background: #fffc00; color: #000; }
+.link.snapchat:hover { background: #e6e600; }
+
+.link.tiktok { background: #010101; color: #fff; }
+.link.tiktok:hover { background: #333; }
+
+.link.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+.link.instagram:hover { background: #bc1888; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .profile h1 {
+        font-size: 1.6em;
+    }
+
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+    }
+
+    .links .link {
+        padding: 10px;
+    }
+
+    .icon {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

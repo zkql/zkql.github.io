@@ -17,8 +17,9 @@ body, html {
     margin: 50px auto;
     padding: 20px;
     text-align: center;
+    margin-top: 300px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 12px rgb(66, 66, 66, 0.6);
     background-color: #111; /* Darker background for container */
     animation: fadeIn 1s ease-in-out; /* Animation */
 }

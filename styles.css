@@ -77,6 +77,58 @@ body, html {
     border-radius: 6px; /* Rounded icons */
 }
 
+/* Clickable Text Styling */
+.clickable-text {
+    text-align: center;
+    margin-top: 10px;
+    opacity: 0; /* Start fully transparent */
+    animation: fadeInText 2s ease-in-out forwards; /* New fade-in animation */
+}
+
+/* Clickable Text Styling */
+.clickable-text {
+    text-align: center;
+    margin-top: 10%; /* Reduced margin to move it closer to the container */
+    opacity: 0; /* Start fully transparent */
+    animation: fadeInText 2s ease-in-out forwards; /* New fade-in animation */
+}
+
+/* Clickable Text Styling */
+.clickable-text {
+    text-align: center;
+    margin-top: 20px;
+    opacity: 0; /* Start fully transparent */
+    animation: fadeInText 2s ease-in-out forwards; /* New fade-in animation */
+}
+
+.who-am-i {
+    display: inline-block; /* Ensures padding and border apply uniformly */
+    font-size: 1.2em;
+    color: #ff4500; /* Orange text for emphasis */
+    cursor: pointer;
+    text-decoration: none;
+    border: 2px solid #ff4500; /* Rounded border with orange color */
+    border-radius: 20px; /* Make the border rounded */
+    padding: 10px 20px; /* Adjusted padding for better outline visibility */
+    transition: color 0.3s ease, transform 0.3s ease, border-color 0.3s ease; /* Smooth transitions */
+}
+
+.who-am-i:hover {
+    color: #ffa500; /* Lighter orange on hover */
+    border-color: #ffa500; /* Change border color on hover */
+    transform: translateY(-3px); /* Hover effect */
+}
+
+/* New Fade-In Animation for the clickable text */
+@keyframes fadeInText {
+    from {
+        opacity: 0; /* Fully transparent */
+    }
+    to {
+        opacity: 1; /* Fully visible */
+    }
+}
+
 /* Specific Platform Colors */
 .link.snapchat { background: #fffc00; color: #000; }
 .link.snapchat:hover { background: #e6e600; }
@@ -111,6 +163,10 @@ body, html {
     .icon {
         width: 30px;
         height: 30px;
+    }
+
+    .who-am-i {
+        font-size: 1em;
     }
 }
 

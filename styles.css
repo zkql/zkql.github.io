@@ -136,6 +136,11 @@ body, html {
 .link.tiktok { background: #010101; color: #fff; }
 .link.tiktok:hover { background: #333; }
 
+/* Twitch Specific Styling */
+.link.twitch { background: #9146ff; color: #fff; }
+.link.twitch:hover { background: #772ce8; }
+
+
 .link.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
 .link.instagram:hover { background: #bc1888; }
 

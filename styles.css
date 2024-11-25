@@ -1,182 +1,319 @@
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+:root {
+    --background: #080808;
+    --text: #ffffff;
+    --accent: #ffffff;
+    --container-bg: rgba(255, 255, 255, 0.07);
+    --link-bg: rgba(255, 255, 255, 0.09);
+}
 
-/* Basic Reset */
-body, html {
+* {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: #000; /* Dark background for sleek design */
-    color: #fff;
-    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
-/* Container Styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--background);
+}
+
+body {
+    font-family: 'Satoshi', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(125deg, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+    z-index: -1;
+}
+
 .container {
-    max-width: 400px;
-    margin: 50px auto;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
-    text-align: center;
-    margin-top: 300px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgb(66, 66, 66, 0.6);
-    background-color: #111; /* Darker background for container */
-    animation: fadeIn 1s ease-in-out; /* Animation */
 }
 
-/* Profile Picture Styling */
-.profile-pic {
+.enter-screen {
+    text-align: center;
+    cursor: pointer;
+    padding: 20px;
+}
+
+.enter-text {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.content {
+    width: 100%;
+    max-width: 400px;
+    background: var(--container-bg);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    padding: 30px;
+    border: 1px solid transparent;
+    background: linear-gradient(var(--container-bg), var(--container-bg)) padding-box,
+                linear-gradient(45deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05)) border-box;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: scale(1);
+    transform-origin: center;
+}
+
+.content.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.profile {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.avatar {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    border: 3px solid #fff;
-    margin: 20px 0;
-    transition: transform 0.3s ease; /* Hover effect */
+    margin-bottom: 15px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
-.profile-pic:hover {
-    transform: scale(1.1); /* Zoom effect on hover */
+.avatar:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
-.profile h1 {
-    font-size: 2em;
-    font-weight: 600;
+.avatar {
+    animation: none;
+}
+
+.username {
+    font-size: 28px;
     margin-bottom: 10px;
+    background: linear-gradient(to right, #fff, #ccc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
 }
 
-.profile p {
-    font-size: 1.1em;
-    color: #ddd; /* Softer text color for subtitles */
-    margin-top: 5px;
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
 }
 
-/* Links Styling */
-.links .link {
+.social-link {
     display: flex;
     align-items: center;
-    justify-content: start;
-    background: #333;
-    color: #fff;
-    padding: 14px;
-    margin: 12px 0;
+    gap: 15px;
+    padding: 16px 20px;
+    background: var(--link-bg);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text);
     text-decoration: none;
-    border-radius: 10px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.links .link:hover {
-    background: #555;
-    transform: translateY(-4px); /* Lifting effect on hover */
-}
-
-/* Icon Styling */
-.icon {
-    width: 35px;
-    height: 35px;
-    margin-right: 12px;
-    border-radius: 6px; /* Rounded icons */
-}
-
-/* Clickable Text Styling */
-.clickable-text {
-    text-align: center;
-    margin-top: 10px;
-    opacity: 0; /* Start fully transparent */
-    animation: fadeInText 2s ease-in-out forwards; /* New fade-in animation */
-}
-
-/* Clickable Text Styling */
-.clickable-text {
-    text-align: center;
-    margin-top: 10%; /* Reduced margin to move it closer to the container */
-    opacity: 0; /* Start fully transparent */
-    animation: fadeInText 2s ease-in-out forwards; /* New fade-in animation */
-}
-
-/* Clickable Text Styling */
-.clickable-text {
-    text-align: center;
-    margin-top: 20px;
-    opacity: 0; /* Start fully transparent */
-    animation: fadeInText 2s ease-in-out forwards; /* New fade-in animation */
-}
-
-.who-am-i {
-    display: inline-block; /* Ensures padding and border apply uniformly */
-    font-size: 1.2em;
-    color: #ff4500; /* Orange text for emphasis */
+    transition: all 0.3s ease;
+    font-size: 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    text-decoration: none;
-    border: 2px solid #ff4500; /* Rounded border with orange color */
-    border-radius: 20px; /* Make the border rounded */
-    padding: 10px 20px; /* Adjusted padding for better outline visibility */
-    transition: color 0.3s ease, transform 0.3s ease, border-color 0.3s ease; /* Smooth transitions */
 }
 
-.who-am-i:hover {
-    color: #ffa500; /* Lighter orange on hover */
-    border-color: #ffa500; /* Change border color on hover */
-    transform: translateY(-3px); /* Hover effect */
+.social-link svg {
+    width: 24px;
+    height: 24px;
 }
 
-/* New Fade-In Animation for the clickable text */
-@keyframes fadeInText {
-    from {
-        opacity: 0; /* Fully transparent */
-    }
-    to {
-        opacity: 1; /* Fully visible */
-    }
+.social-link:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Specific Platform Colors */
-.link.snapchat { background: #fffc00; color: #000; }
-.link.snapchat:hover { background: #e6e600; }
+.hidden {
+    display: none;
+}
 
-.link.tiktok { background: #010101; color: #fff; }
-.link.tiktok:hover { background: #333; }
-
-/* Twitch Specific Styling */
-.link.twitch { background: #9146ff; color: #fff; }
-.link.twitch:hover { background: #772ce8; }
-
-
-.link.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
-.link.instagram:hover { background: #bc1888; }
-
-/* Mobile Responsive */
 @media (max-width: 768px) {
     .container {
-        max-width: 90%;
-        margin: 200px auto;
         padding: 15px;
     }
-
-    .profile h1 {
-        font-size: 1.6em;
+    
+    .content {
+        padding: 25px;
+        max-width: 380px;
     }
-
-    .profile-pic {
-        width: 100px;
-        height: 100px;
+    
+    .avatar {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 12px;
     }
-
-    .links .link {
-        padding: 10px;
+    
+    .username {
+        font-size: 24px;
+        margin-bottom: 8px;
     }
-
-    .icon {
-        width: 30px;
-        height: 30px;
+    
+    .social-link {
+        padding: 14px 18px;
+        border-radius: 16px;
+        gap: 12px;
     }
-
-    .who-am-i {
-        font-size: 1em;
+    
+    .social-link svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .social-link span {
+        font-size: 15px;
     }
 }
 
-/* Animations */
-@keyframes fadeIn {
+/* Small phones */
+@media (max-width: 380px) {
+    .content {
+        padding: 15px 12px;
+    }
+    
+    .avatar {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .username {
+        font-size: 22px;
+    }
+    
+    .social-link {
+        padding: 12px 14px;
+    }
+}
+
+/* Handle landscape mode */
+@media (max-height: 600px) and (orientation: landscape) {
+    .container {
+        padding: 10px;
+    }
+    
+    .content {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 20px;
+        align-items: start;
+        max-height: 85vh;
+    }
+    
+    .profile {
+        margin-bottom: 0;
+    }
+    
+    .social-links {
+        max-height: 60vh;
+        overflow-y: auto;
+        padding-right: 10px;
+    }
+}
+
+/* Custom Scrollbar */
+.content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+/* Safe Area for Modern Phones */
+@supports (padding: max(0px)) {
+    .container {
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+        padding-top: max(12px, env(safe-area-inset-top));
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+    }
+}
+
+/* Disable hover effects on mobile */
+@media (hover: none) {
+    .social-link:hover {
+        transform: none;
+        background: var(--link-bg);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Add active state for touch */
+    .social-link:active {
+        transform: scale(0.98);
+        background: rgba(255, 255, 255, 0.15);
+    }
+}
+
+/* Prevent content from being affected by zoom */
+@media screen and (min-width: 320px) {
+    html {
+        font-size: 16px !important;
+    }
+    
+    * {
+        max-height: 100vh;
+        transform: scale(1) !important;
+    }
+}
+
+/* Add these animation keyframes */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.1); }
+    50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+    100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.1); }
+}
+
+@keyframes slideIn {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -185,4 +322,166 @@ body, html {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Enhanced element animations */
+.avatar {
+    animation: none;
+    transition: all 0.3s ease;
+}
+
+.avatar:hover {
+    animation: none;
+}
+
+.username {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.social-link {
+    animation: slideIn 0.5s ease-out backwards;
+}
+
+/* Add animation delay for each social link */
+.social-link:nth-child(1) { animation-delay: 0.1s; }
+.social-link:nth-child(2) { animation-delay: 0.2s; }
+.social-link:nth-child(3) { animation-delay: 0.3s; }
+
+/* Enhanced hover effects */
+.social-link {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.social-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.social-link:hover::after {
+    left: 100%;
+}
+
+/* Animated background gradient */
+.background-overlay {
+    background: linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    animation: gradientBG 15s ease infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Smooth enter animation */
+.content.visible {
+    animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Icon animations */
+.social-link svg {
+    transition: all 0.3s ease;
+}
+
+.social-link:hover svg {
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* Platform-specific hover effects */
+.social-link.tiktok:hover {
+    background: rgba(37, 244, 238, 0.1);
+    border-color: #25F4EE;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.social-link.snapchat:hover {
+    background: rgba(255, 252, 0, 0.1);
+    border-color: #FFFC00;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.social-link.twitch:hover {
+    background: rgba(145, 70, 255, 0.1);
+    border-color: #9146FF;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Enter text animation */
+.enter-text {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Optional: Add this to script.js for scroll-triggered animations */
+
+/* Loading animation for enter screen */
+.enter-text {
+    position: relative;
+    animation: fadeInOut 2s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Smooth background animation */
+.background-overlay {
+    background: linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Custom selection color */
+::selection {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
 }

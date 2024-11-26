@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.wait = parseInt(wait, 10);
             this.type();
             this.isDeleting = false;
+            this.cursorVisible = true;
         }
 
         type() {
@@ -68,7 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.txt = fullTxt.substring(0, this.txt.length + 1);
             }
 
-            this.txtElement.innerHTML = `<span class="txt">${this.txt}</span>`;
+            const cursor = this.cursorVisible ? '|' : '';
+            this.txtElement.innerHTML = `<span class="txt">${this.txt}</span>${cursor}`;
 
             let typeSpeed = 100;
 
@@ -83,6 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.isDeleting = false;
                 this.wordIndex++;
                 typeSpeed = 500;
+            }
+
+            // Blink cursor
+            if (typeSpeed > 100) {
+                setInterval(() => {
+                    this.cursorVisible = !this.cursorVisible;
+                    this.txtElement.innerHTML = `<span class="txt">${this.txt}</span>${this.cursorVisible ? '|' : ''}`;
+                }, 400);
             }
 
             setTimeout(() => this.type(), typeSpeed);
@@ -156,4 +166,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Call this after content is visible
     addScrollAnimations();
+
+    // Add this after DOMContentLoaded
+    function initParticles() {
+        const canvas = document.createElement('canvas');
+        canvas.id = 'particles';
+        document.querySelector('.background-overlay').appendChild(canvas);
+        
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function init() {
+            particles = [];
+            for (let i = 0; i < 50; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        init();
+        animate();
+    }
+
+    initParticles();
 });

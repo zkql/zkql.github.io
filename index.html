@@ -1,21 +1,106 @@
 <html>
 <head>
-    <meta name="color-scheme" content="light dark">
-    <script>
-        function searchWord() {
-            let input = document.getElementById("search").value;
-            let pre = document.getElementById("content");
-            let text = pre.textContent;
-            let regex = new RegExp(input, "gi");
-            let highlighted = text.replace(regex, match => `<mark>${match}</mark>`);
-            pre.innerHTML = highlighted;
+    <meta name="color-scheme" content="dark">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            background: #0d1117;
+            color: #ffffff;
+            text-align: center;
         }
-    </script>
-</head>
-<body>
-    <input type="text" id="search" placeholder="Search...">
-    <button onclick="searchWord()">Search</button>
-    <pre id="content" style="word-wrap: break-word; white-space: pre-wrap;">
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00eaff;
+        }
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 238, 255, 0.2);
+            padding: 12px;
+            border-radius: 12px;
+            backdrop-filter: blur(12px);
+            border: 2px solid #00eaff;
+        }
+        input {
+            flex-grow: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #00eaff;
+        }
+        .clear-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #00eaff;
+            font-size: 18px;
+        }
+        pre {
+            background: rgba(0, 238, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 238, 255, 0.5);
+            width: 90%;
+            max-width: 800px;
+            height: 60vh;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 16px;
+            color: #ffffff;
+            backdrop-filter: blur(10px);
+        }
+        mark {
+            background-color: #ff00ff;
+            color: white;
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+    <script>
+        let text = `
+/linux
+/windows
+/iphone
+/android
+/xbox
+/playstation
+/nintendo
+/pokemon
+/overwatch
+/worldofwarcraft
+/leagueoflegends
+/minecraft
+/steam
+/coinbase
+/robinhood
+/cashapp
+/venmo
+/paypal
+/washingtonpost
+/nytimes
+/cnn
+/espn
+/crunchyroll
+/hbomax
+/disneyplus
+/hulu
+/adidas
+/bestbuy
 /target
 /etsy
 /walmart
@@ -1111,6 +1196,43 @@
 /abc
 /epicgames
 /fortnite
-    </pre>
+`;
+        
+        function searchWord() {
+            let input = document.getElementById("search").value.trim().toLowerCase();
+            let pre = document.getElementById("content");
+            
+            if (input === "") {
+                pre.innerHTML = text.replace(/\n/g, '<br>');
+                return;
+            }
+            
+            let lines = text.split('\n');
+            let results = lines.filter(line => line.toLowerCase().includes(input));
+            
+            if (results.length > 0) {
+                pre.innerHTML = results.map(line => line.replace(new RegExp(input, "gi"), match => `<mark>${match}</mark>`)).join('<br>');
+            } else {
+                pre.innerHTML = "<p style='opacity: 0.7;'>No results found</p>";
+            }
+        }
+        
+        function clearSearch() {
+            document.getElementById("search").value = "";
+            searchWord();
+        }
+        
+        window.onload = function() {
+            document.getElementById("content").innerHTML = text.replace(/\n/g, '<br>');
+        };
+    </script>
+</head>
+<body>
+    <h1>Find Username</h1>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search..." oninput="searchWord()">
+        <button class="clear-btn" onclick="clearSearch()"><i class="fas fa-times"></i></button>
+    </div>
+    <pre id="content"></pre>
 </body>
 </html>

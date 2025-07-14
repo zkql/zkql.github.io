@@ -1,78 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>MPH Monitor</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #0f0;
-      text-align: center;
-      padding-top: 50px;
-    }
-    .speed {
-      font-size: 48px;
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPH Monitor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --background-dark: #1a1a2e;
+            --primary-green: #0f0;
+            --accent-blue: #007bff;
+            --text-light: #e0e0e0;
+            --border-color: #3a3a5f;
+            --box-shadow-color: rgba(0, 255, 0, 0.2);
+            --mode-icon-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--background-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Prevent scroll issues with subtle animations */
+        }
+
+        .container {
+            background: #2a2a4e;
+            border-radius: 15px;
+            box-shadow: 0 0 30px var(--box-shadow-color);
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--border-color);
+            position: relative;
+            z-index: 1; /* Ensure content is above any background effects */
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-green);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px var(--primary-green);
+        }
+
+        p {
+            color: var(--text-light);
+            font-size: 1.1em;
+            margin-bottom: 25px;
+        }
+
+        .speed-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #0d0d1e;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid var(--primary-green);
+            box-shadow: inset 0 0 15px rgba(0, 255, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .speed {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5em;
+            color: var(--primary-green);
+            text-shadow: 0 0 10px var(--primary-green), 0 0 20px rgba(0, 255, 0, 0.5);
+            animation: pulse 1.5s infinite alternate; /* Subtle pulse effect */
+        }
+
+        @keyframes pulse {
+            from {
+                text-shadow: 0 0 10px var(--primary-green), 0 0 20px rgba(0, 255, 0, 0.5);
+            }
+            to {
+                text-shadow: 0 0 15px var(--primary-green), 0 0 30px rgba(0, 255, 0, 0.8);
+            }
+        }
+
+        .unit {
+            font-size: 1.2em;
+            color: var(--text-light);
+            margin-top: -10px; /* Pull unit closer to number */
+        }
+
+        .mode-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+        }
+
+        .mode-icon {
+            font-size: 2.5em;
+            color: var(--mode-icon-color);
+            margin-right: 15px;
+            transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .mode-text {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .speed {
+                font-size: 3.5em;
+            }
+            .mode-icon {
+                font-size: 2em;
+            }
+            .mode-text {
+                font-size: 1.2em;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <h1>MPH Monitor Tool</h1>
-  <p>Tracking your speed using GPS...</p>
-  <div class="speed" id="speed">0.00 MPH</div>
+    <div class="container">
+        <h1>MPH Monitor Tool</h1>
+        <p>Tracking your speed using GPS...</p>
 
-  <script>
-    let prevCoords = null;
-    let prevTime = null;
+        <div class="speed-display">
+            <div class="speed" id="speed">0.00</div>
+            <div class="unit">MPH</div>
+        </div>
 
-    function toRadians(deg) {
-      return deg * (Math.PI / 180);
-    }
+        <div class="mode-display">
+            <i id="modeIcon" class="fas fa-question-circle mode-icon"></i>
+            <span id="modeText" class="mode-text">Unknown Mode</span>
+        </div>
 
-    function haversineDistance(lat1, lon1, lat2, lon2) {
-      const R = 3958.8; // Earth radius in miles
-      const dLat = toRadians(lat2 - lat1);
-      const dLon = toRadians(lon2 - lon1);
-      const a = Math.sin(dLat / 2) ** 2 +
-                Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
-                Math.sin(dLon / 2) ** 2;
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      return R * c;
-    }
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+    </div>
 
-    function updateSpeed(position) {
-      const { latitude, longitude } = position.coords;
-      const currentTime = Date.now();
+    <script>
+        let prevCoords = null;
+        let prevTime = null;
+        const R = 3958.8; // Earth radius in miles
 
-      if (prevCoords) {
-        const timeDiff = (currentTime - prevTime) / 1000; // in seconds
-        const distance = haversineDistance(prevCoords.lat, prevCoords.lon, latitude, longitude); // in miles
-        const speedMph = (distance / timeDiff) * 3600; // miles per hour
+        // DOM elements
+        const speedElement = document.getElementById("speed");
+        const modeIconElement = document.getElementById("modeIcon");
+        const modeTextElement = document.getElementById("modeText");
+        const errorMessageElement = document.getElementById("errorMessage");
 
-        document.getElementById("speed").textContent = speedMph.toFixed(2) + " MPH";
-      }
+        function toRadians(deg) {
+            return deg * (Math.PI / 180);
+        }
 
-      prevCoords = { lat: latitude, lon: longitude };
-      prevTime = currentTime;
-    }
+        function haversineDistance(lat1, lon1, lat2, lon2) {
+            const dLat = toRadians(lat2 - lat1);
+            const dLon = toRadians(lon2 - lon1);
+            const a = Math.sin(dLat / 2) ** 2 +
+                      Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+                      Math.sin(dLon / 2) ** 2;
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
 
-    function handleError(error) {
-      console.error("Geolocation error:", error.message);
-      alert("GPS access denied or unavailable.");
-    }
+        function getModeOfTransport(speedMph) {
+            if (speedMph < 0.5) return { text: "Stationary", icon: "fas fa-person-standing" }; // Very low speed, considered stationary
+            if (speedMph < 5) return { text: "Walking", icon: "fas fa-person-walking" };
+            if (speedMph < 20) return { text: "Biking", icon: "fas fa-person-biking" };
+            if (speedMph < 80) return { text: "Driving", icon: "fas fa-car" };
+            return { text: "Flying", icon: "fas fa-plane" }; // Higher speeds for flying
+        }
 
-    if (navigator.geolocation) {
-      navigator.geolocation.watchPosition(updateSpeed, handleError, {
-        enableHighAccuracy: true,
-        maximumAge: 1000,
-        timeout: 5000
-      });
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
-  </script>
+        function updateSpeed(position) {
+            const { latitude, longitude } = position.coords;
+            const currentTime = Date.now();
+
+            if (prevCoords) {
+                const timeDiff = (currentTime - prevTime) / 1000; // in seconds
+                const distance = haversineDistance(prevCoords.lat, prevCoords.lon, latitude, longitude); // in miles
+
+                let speedMph = 0;
+                if (timeDiff > 0) { // Avoid division by zero
+                    speedMph = (distance / timeDiff) * 3600; // miles per hour
+                }
+
+                speedElement.textContent = speedMph.toFixed(2);
+
+                // Update mode of transport
+                const mode = getModeOfTransport(speedMph);
+                modeIconElement.className = `${mode.icon} mode-icon`; // Update icon class
+                modeTextElement.textContent = mode.text;
+
+            }
+
+            prevCoords = { lat: latitude, lon: longitude };
+            prevTime = currentTime;
+            errorMessageElement.style.display = 'none'; // Hide error if successful
+        }
+
+        function handleError(error) {
+            console.error("Geolocation error:", error.message);
+            let message = "GPS access denied or unavailable.";
+            if (error.code === error.PERMISSION_DENIED) {
+                message = "Please allow location access to track your speed.";
+            } else if (error.code === error.POSITION_UNAVAILABLE) {
+                message = "Location information is unavailable. Try again later.";
+            } else if (error.code === error.TIMEOUT) {
+                message = "Request for location timed out. Please check your GPS signal.";
+            }
+            errorMessageElement.textContent = message;
+            errorMessageElement.style.display = 'block';
+
+            // Reset display if there's an error
+            speedElement.textContent = "N/A";
+            modeIconElement.className = "fas fa-exclamation-triangle mode-icon";
+            modeTextElement.textContent = "Error";
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(updateSpeed, handleError, {
+                enableHighAccuracy: true,
+                maximumAge: 1000, // Reuse position if younger than 1 second
+                timeout: 10000 // Wait up to 10 seconds for a position
+            });
+        } else {
+            errorMessageElement.textContent = "Geolocation is not supported by this browser.";
+            errorMessageElement.style.display = 'block';
+            speedElement.textContent = "N/A";
+            modeIconElement.className = "fas fa-xmark-circle mode-icon";
+            modeTextElement.textContent = "Unsupported";
+        }
+    </script>
 
 </body>
 </html>
